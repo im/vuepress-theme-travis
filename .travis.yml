@@ -1,3 +1,4 @@
+sudo: required
 deploy:
   provider: npm
   email: "tangxiaomiemail@gmail.com"
