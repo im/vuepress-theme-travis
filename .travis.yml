@@ -1,8 +1,4 @@
-language: node_js
-node_js:
-  - 8.11.1
-cache:
-  directories:
-    - node_modules
-script:
-    - ./publish.sh
+deploy:
+  provider: npm
+  email: "tangxiaomiemail@gmail.com"
+  api_key: ${NPM_TOKEN}
