@@ -1,4 +1,10 @@
+language: node_js
 sudo: required
+node_js:
+  - 8.11.1
+cache:
+  directories:
+    - node_modules
 deploy:
   provider: npm
   email: "tangxiaomiemail@gmail.com"
