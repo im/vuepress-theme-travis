@@ -1,7 +1,6 @@
 <template>
     <div class="theme-container">
         <Sidebar></Sidebar>
-
         <BlogMain></BlogMain>
     </div>
 </template>
