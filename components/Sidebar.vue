@@ -11,6 +11,9 @@
                 <div class="nav-item">
                     <a href="#">About Us</a>
                 </div>
+                <div class="nav-item">
+                    <a href="#">About Us</a>
+                </div>
             </nav>
         </div>
     </header>
