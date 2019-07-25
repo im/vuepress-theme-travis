@@ -2,9 +2,9 @@
     <header class="sidebar">
         <div class="layout-inner">
             <h1 class="logo">
-                <a href="#">Travis CI</a>
+                <a href="/">{{$site.title}}</a>
             </h1>
-            <nav class="nav">
+            <nav class="nav" v-if="$themeConfig.nav">
                 <div class="nav-item">
                     <a href="#">Blog</a>
                 </div>
@@ -23,7 +23,10 @@
 export default {
     name: 'Sidebar',
 
-    components: {}
+    components: {},
+
+    created (){
+    }
 }
 </script>
 
