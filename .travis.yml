@@ -5,8 +5,8 @@ deploy:
   provider: npm
   email: "tangxiaomiemail@gmail.com"
   api_key: ${NPM_TOKEN}
-  # skip_cleanup: true
-  # tag: next
-  # on:
-  #   tags: true
-  #   branch: master
+  skip_cleanup: true
+  tag: next
+  on:
+    tags: true
+    branch: master
