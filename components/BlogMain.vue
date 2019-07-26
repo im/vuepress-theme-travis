@@ -1,17 +1,20 @@
 <template>
     <main class="layout-main">
         <div class="layout-inner blog-layout">
-            <form action="/search" method="get" class="search" v-if="$themeConfig.search">
+            <div class="search">
+                <SearchBox/>
+            </div>
+            <!-- <form action="/search" method="get"  v-if="$themeConfig.search">
                 <input type="search" name="q" placeholder="Search" autocomplete="off" required="true">
-            </form>
-            <nav class="blog-nav" v-if="$themeConfig.category">
+            </form> -->
+            <!-- <nav class="blog-nav" v-if="$themeConfig.category">
                 <div class="nav-item">
                     <a href="/" class="is-active">Latest</a>
                 </div>
                 <div class="nav-item">
                     <a href="#">Latest</a>
                 </div>
-            </nav>
+            </nav> -->
             <div class="article-list">
                 <dir class="article-item" v-for="(page, key) in pages" :key="key">
                     <div class="header">
@@ -19,17 +22,17 @@
                             <a :href="page.path">{{page.title}}</a>
                         </h2>
                         <div class="meta">
-                            <span>
-                                <time :datetime="page.frontmatter.date">{{page.frontmatter.date}}</time>
-                            </span>|
-                            <a class="author" href="http://twitter.com/biancatwilk" title="Bianca Wilk on Twitter">
-                                <img class="blog-avatar" src="https://avatars.io/twitter/biancatwilk" alt="Bianca Wilk avatar">
-                                Bianca Wilk
-                            </a>|
-                            <a href="/" v-for="(category, key) in page.frontmatter.category" :key="key" title="Go to 'news' category" class="category-label">{{category}}</a>
+                            <span v-if="page.lastUpdated">
+                                <time :datetime="page.lastUpdated">{{page.lastUpdated}}</time>
+                            </span>
+                            <a class="author" v-if="authorInfo" target="_blank" :href="authorInfo.github">
+                                <img class="blog-avatar" :src="authorInfo.headerUrl">
+                                {{authorInfo.name}}
+                            </a>
+                            <!-- <a href="/" v-for="(category, key) in page.frontmatter.category" :key="key" title="Go to 'news' category" class="category-label">{{category}}</a> -->
                         </div>
                     </div>
-                    <div class="main" v-html="page.excerpt" v-if="page.frontmatter.home"></div>
+                    <div class="main" v-html="page.excerpt" v-if="isHome && page.excerpt"></div>
                     <Content class="theme-default-content" v-else />
                     <div class="mt36">
                         <a :href="page.path" v-if="$page.frontmatter.home" class="square-button" :title="page.title">Continue</a>
@@ -41,6 +44,7 @@
 </template>
 
 <script>
+import SearchBox from '@SearchBox'
 export default {
     name: 'BlogMain',
 
@@ -56,12 +60,16 @@ export default {
                     return !item.frontmatter.home && item.key === this.$page.key;
                 }
             });
+        },
+        authorInfo () {
+            return this.$themeConfig.authorInfo || {};
         }
     },
-    components: {},
+    methods: {
+    },
+    components: { SearchBox },
 
     created () {
-        console.log(this)
     }
 }
 </script>
@@ -100,7 +108,12 @@ export default {
                 &:hover, &.is-active
                     border-color: #3eaaaf;
                     color: #3eaaaf;
-input[type=search]
+.search-box .suggestions.align-right
+    right auto
+    border-radius 2px
+    *
+        border-radius 2px 
+.search input
     display: inline-block;
     width: 100%;
     padding: 0.1em 0.5em 0.1em;
@@ -111,10 +124,12 @@ input[type=search]
     background-size: 15px;
     background-position: 96% center;
     background-repeat: no-repeat;
-    background-image: url(../images/icon-search.svg);
+    &:focus
+        border: 2px solid #dad8d8f5
+    // background-image: url(../images/icon-search.svg);
 .article-list
     grid-column-start: 1;
-    grid-row-start: 2;
+    grid-row-start: 1;
     padding-top: 20px;
     max-width: 640px;
     .article-item
@@ -131,11 +146,15 @@ input[type=search]
         .meta
             color: #9d9d9d;
             font-size 18px
+            display flex
+            align-items center
             a
                 color: #9d9d9d;
             & > span:first-of-type
                 margin-right: .5em;
             .author, .category-label
+                display flex
+                align-items center
                 margin-right: .5em;
                 margin-left: .5em;
             .blog-avatar
