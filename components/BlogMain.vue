@@ -11,9 +11,6 @@
                 <div class="nav-item">
                     <a href="#">Latest</a>
                 </div>
-                <div class="nav-item">
-                    <a href="#">Latest</a>
-                </div>
             </nav>
             <div class="article-list">
                 <dir class="article-item" v-for="(page, key) in pages" :key="key">
